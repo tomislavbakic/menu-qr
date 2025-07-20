@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
   }
 
-  const token = generateJwtToken(admin)
+  const token = generateJwtToken(admin);
   console.log('Generated JWT Token:', token);
   return NextResponse.json({ token });
 }
