@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ItemType } from '@/generated/prisma';
+
+
+type ItemType = 'FOOD' | 'DRINK' | 'ACTIVITY';
 
 type Item = {
   id: number;
   name: string;
-  type: 'FOOD' | 'DRINK' | 'ACTIVITY';
+  type: ItemType;
   available: boolean;
 };
 
@@ -15,7 +17,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [items, setItems] = useState<Item[]>([]);
   const [name, setName] = useState('');
-  const [type, setType] = useState<'FOOD' | 'DRINK' | 'ACTIVITY'>('FOOD');
+  const [type, setType] = useState<ItemType>('FOOD');
   const [editId, setEditId] = useState<number | null>(null);
 
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
