@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ItemType } from '@/generated/prisma';
 
 type Item = {
   id: number;
@@ -84,7 +85,7 @@ export default function AdminDashboard() {
           placeholder="Item name"
           className="border p-2"
         />
-        <select value={type} onChange={e => setType(e.target.value as any)} className="border p-2">
+        <select value={type} onChange={e => setType(e.target.value as ItemType)} className="border p-2">
           <option value="FOOD">FOOD</option>
           <option value="DRINK">DRINK</option>
           <option value="ACTIVITY">ACTIVITY</option>
