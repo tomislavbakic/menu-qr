@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import '../globals.css';
 
 type Admin = {
   id: number;
@@ -78,49 +79,81 @@ export default function AdminPage() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Admin CRUD</h1>
+    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 p-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+        <h1 className="text-4xl font-extrabold text-center text-pink-600 mb-6">
+          👤 Admin CRUD
+        </h1>
 
-      <input
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        type="password"
-      />
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <input
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="flex-1 border border-purple-200 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+          />
+          <input
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            className="flex-1 border border-purple-200 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+          />
 
-      {editingAdminId === null ? (
-        <button onClick={handleAdd}>Add Admin</button>
-      ) : (
-        <>
-          <button onClick={handleUpdate}>Update Admin</button>
-          <button
-            onClick={() => {
-              setEditingAdminId(null);
-              setUsername('');
-              setPassword('');
-            }}
-          >
-            Cancel
-          </button>
-        </>
-      )}
+          {editingAdminId === null ? (
+            <button
+              onClick={handleAdd}
+              className="bg-pink-600 text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-pink-700 transition-all"
+            >
+              Dodaj
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={handleUpdate}
+                className="bg-yellow-500 text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-yellow-600 transition-all"
+              >
+                Izmeni
+              </button>
+              <button
+                onClick={() => {
+                  setEditingAdminId(null);
+                  setUsername('');
+                  setPassword('');
+                }}
+                className="bg-gray-400 text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-gray-500 transition-all"
+              >
+                Otkaži
+              </button>
+            </>
+          )}
+        </div>
 
-      <hr />
-
-      <ul>
-        {admins.map((admin) => (
-          <li key={admin.id}>
-            <b>{admin.username}</b>{' '}
-            <button onClick={() => startEdit(admin)}>Edit</button>{' '}
-            <button onClick={() => handleDelete(admin.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+        <ul className="space-y-4">
+          {admins.map((admin) => (
+            <li
+              key={admin.id}
+              className="flex items-center justify-between bg-purple-50 border border-purple-200 rounded-xl p-4 shadow hover:shadow-md transition-all"
+            >
+              <p className="text-lg font-semibold text-purple-800">{admin.username}</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => startEdit(admin)}
+                  className="bg-yellow-400 text-white px-4 py-2 rounded-xl shadow hover:bg-yellow-500 transition-all"
+                >
+                  Izmeni
+                </button>
+                <button
+                  onClick={() => handleDelete(admin.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-xl shadow hover:bg-red-600 transition-all"
+                >
+                  Obriši
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }

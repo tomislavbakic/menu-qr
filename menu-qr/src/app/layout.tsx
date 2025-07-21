@@ -10,13 +10,15 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0, fontFamily: 'sans-serif' }}>
-        <header style={{ backgroundColor: '#222', padding: '1rem', color: 'white' }}>
-          <h1 style={{ margin: 0 }}>🍽️ Menu QR</h1>
+      <body className="min-h-screen flex flex-col bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 text-gray-800">
+        <header className="bg-purple-600 text-white px-6 py-4 shadow-md">
+          <h1 className="text-2xl font-bold">🍽️ Menu QR</h1>
         </header>
-        <main>{children}</main>
-        <footer style={{ backgroundColor: '#eee', padding: '1rem', marginTop: '2rem' }}>
-          <p style={{ margin: 0 }}>© 2025 Menu QR</p>
+
+        <main className="flex-1 p-4">{children}</main>
+
+        <footer className="bg-white text-center text-sm text-gray-500 py-4 shadow-inner">
+          <p className="m-0">© 2025 Menu QR</p>
         </footer>
       </body>
     </html>

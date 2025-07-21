@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
+import '../../globals.css';
 
 type ItemType = 'FOOD' | 'DRINK' | 'ACTIVITY';
 
@@ -77,53 +77,64 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Admin Dashboard - Menu CRUD</h1>
+    <main className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 p-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+        <h1 className="text-4xl font-extrabold text-center text-pink-600 mb-6">
+          🛠️ Admin Dashboard
+        </h1>
 
-      <div className="mb-4 space-x-2">
-        <input
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder="Item name"
-          className="border p-2"
-        />
-        <select value={type} onChange={e => setType(e.target.value as ItemType)} className="border p-2">
-          <option value="FOOD">FOOD</option>
-          <option value="DRINK">DRINK</option>
-          <option value="ACTIVITY">ACTIVITY</option>
-        </select>
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          {editId ? 'Update' : 'Add'}
-        </button>
-      </div>
-
-      <ul>
-        {items.map(item => (
-          <li
-            key={item.id}
-            className="flex justify-between items-center border-b py-2"
+        <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
+          <input
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder="Naziv stavke"
+            className="flex-1 border border-purple-200 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
+          />
+          <select
+            value={type}
+            onChange={e => setType(e.target.value as ItemType)}
+            className="border border-purple-200 p-3 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
           >
-            <span>{item.name} ({item.type})</span>
-            <div>
-              <button
-                onClick={() => handleEdit(item)}
-                className="bg-yellow-500 text-white px-2 py-1 mr-2"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(item.id)}
-                className="bg-red-500 text-white px-2 py-1"
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+            <option value="FOOD">FOOD</option>
+            <option value="DRINK">DRINK</option>
+            <option value="ACTIVITY">ACTIVITY</option>
+          </select>
+          <button
+            onClick={handleSubmit}
+            className="bg-pink-600 text-white font-semibold px-6 py-3 rounded-xl shadow hover:bg-pink-700 transition-all"
+          >
+            {editId ? 'Izmeni' : 'Dodaj'}
+          </button>
+        </div>
+
+        <ul className="space-y-4">
+          {items.map(item => (
+            <li
+              key={item.id}
+              className="flex items-center justify-between bg-purple-50 border border-purple-200 rounded-xl p-4 shadow hover:shadow-md transition-all"
+            >
+              <div>
+                <p className="text-lg font-semibold text-purple-800">{item.name}</p>
+                <p className="text-sm text-gray-600 italic">{item.type}</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleEdit(item)}
+                  className="bg-yellow-400 text-white px-4 py-2 rounded-xl shadow hover:bg-yellow-500 transition-all"
+                >
+                  Izmeni
+                </button>
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-xl shadow hover:bg-red-600 transition-all"
+                >
+                  Obriši
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }
