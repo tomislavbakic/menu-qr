@@ -70,7 +70,7 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
 
     try {
       const response = await fetch(`/api/orders/${orderId}/complete`, {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
