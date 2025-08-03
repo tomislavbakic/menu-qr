@@ -26,6 +26,7 @@ model Item {
   type      ItemType
   available Boolean  @default(true)
   createdAt DateTime @default(now())
+  orders    Order[]
 }
 
 model Admin {
@@ -33,4 +34,28 @@ model Admin {
   username String  @unique
   password String
   createdAt DateTime @default(now())
+}
+
+// Add this enum to your schema.prisma file
+enum OrderStatus {
+  PENDING
+  COMPLETED
+}
+
+// Updated Order model
+model Order {
+  id        Int         @id @default(autoincrement())
+  guestName String
+  itemId    Int
+  note      String?
+  status    OrderStatus @default(PENDING)  // Add this field
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  
+  // Relations
+  item      Item        @relation(fields: [itemId], references: [id])
+  
+  @@index([itemId])
+  @@index([createdAt])
+  @@index([status])  // Add index for status
 }

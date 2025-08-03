@@ -17,9 +17,15 @@ export default function Home() {
 
         <Link
           href="/menu"
-          className="bg-pink-500 hover:bg-pink-600 text-white text-lg font-semibold py-3 px-8 rounded-full shadow-lg transition-all"
+          className="bg-pink-500 hover:bg-pink-600 text-white text-lg font-semibold py-3 px-2 rounded-full shadow-lg transition-all"
         >
           Pogledaj meni
+        </Link>
+         <Link
+          href="/orders"
+          className="bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-3 px-2 ml-2 rounded-full shadow-lg transition-all"
+        >
+          Pogledaj narudžbe
         </Link>
         <p className="text-gray-600 mt-6 mb-2">ili</p>
         <Link

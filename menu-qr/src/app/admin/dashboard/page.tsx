@@ -82,7 +82,20 @@ export default function AdminDashboard() {
         <h1 className="text-4xl font-extrabold text-center text-pink-600 mb-6">
           🛠️ Admin Dashboard
         </h1>
-
+         <div className="flex gap-3 mb-5">
+            <a
+              href="/orders/completed"
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium shadow-md"
+            >
+              Završene narudžbe
+            </a>
+            <a
+              href="/menu"
+              className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors text-sm font-medium shadow-md"
+            >
+              Pregled menija
+            </a>
+        </div>
         <div className="flex flex-col md:flex-row items-center gap-4 mb-6">
           <input
             value={name}
