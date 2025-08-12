@@ -3,6 +3,7 @@ import OrdersClient from './OrdersClient';
 
 export default async function OrdersPage() {
   try {
+    console.log('Fetching pending orders...');
     // Only fetch PENDING orders (not completed ones)
     const orders = await prisma.order.findMany({
       where: {
@@ -15,7 +16,7 @@ export default async function OrdersPage() {
         createdAt: 'desc'
       }
     });
-
+    console.log(`Fetched ${orders.length} pending orders`);
     // Serialize the data to avoid hydration issues
     const serializedOrders = orders.map(order => ({
       ...order,
