@@ -24,6 +24,7 @@ interface OrdersClientProps {
 }
 
 export default function OrdersClient({ initialOrders }: OrdersClientProps) {
+  console.log('Initializing OrdersClient with initial orders:', initialOrders.length);
   const [orders, setOrders] = useState<SerializedOrderWithItem[]>(initialOrders);
   const [completingOrders, setCompletingOrders] = useState<Set<number>>(new Set());
 

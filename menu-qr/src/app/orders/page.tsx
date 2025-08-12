@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import OrdersClient from './OrdersClient';
 
 export default async function OrdersPage() {
+  console.log('OrdersPage component is rendering...');
   try {
     console.log('Fetching pending orders...');
     // Only fetch PENDING orders (not completed ones)
@@ -30,7 +31,7 @@ export default async function OrdersPage() {
 
     return <OrdersClient initialOrders={serializedOrders} />;
   } catch (error) {
-    console.error('Error fetching orders:', error);
+    console.log('Error fetching orders:', error);
     
     // Fallback UI in case of database error
     return (
