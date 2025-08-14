@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useOrders } from '../../hooks/useOrders';
 
 type SerializedOrderWithItem = {
   id: number;
@@ -25,8 +26,9 @@ interface OrdersClientProps {
 
 export default function OrdersClient({ initialOrders }: OrdersClientProps) {
   console.log('Initializing OrdersClient with initial orders:', initialOrders.length);
-  const [orders, setOrders] = useState<SerializedOrderWithItem[]>(initialOrders);
-  const [completingOrders, setCompletingOrders] = useState<Set<number>>(new Set());
+  // const [orders, setOrders] = useState<SerializedOrderWithItem[]>(initialOrders);
+  // const [completingOrders, setCompletingOrders] = useState<Set<number>>(new Set());
+  const {orders, handleCompleteOrder, completingOrders} = useOrders('PENDING')
 
   const formatDate = (dateString: string) => {
     return new Intl.DateTimeFormat('sr-RS', {
@@ -64,36 +66,6 @@ export default function OrdersClient({ initialOrders }: OrdersClientProps) {
     }
   };
 
-  const handleCompleteOrder = async (orderId: number) => {
-    if (completingOrders.has(orderId)) return;
-
-    setCompletingOrders(prev => new Set(prev).add(orderId));
-
-    try {
-      const response = await fetch(`/api/orders/${orderId}/complete`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        // Remove the completed order from the list
-        setOrders(prevOrders => prevOrders.filter(order => order.id !== orderId));
-      } else {
-        alert('Greška pri označavanju narudžbe kao završene');
-      }
-    } catch (error) {
-      console.error('Error completing order:', error);
-      alert('Greška pri označavanju narudžbe kao završene');
-    } finally {
-      setCompletingOrders(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(orderId);
-        return newSet;
-      });
-    }
-  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 p-6">

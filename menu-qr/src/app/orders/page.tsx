@@ -19,7 +19,7 @@ export default async function OrdersPage() {
     });
     console.log(`Fetched ${orders.length} pending orders`);
     // Serialize the data to avoid hydration issues
-    const serializedOrders = orders.map(order => ({
+    const serializedOrders = orders.map((order: any) => ({
       ...order,
       createdAt: order.createdAt.toISOString(),
       updatedAt: order.updatedAt.toISOString(),

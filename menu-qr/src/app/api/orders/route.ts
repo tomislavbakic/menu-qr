@@ -55,9 +55,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: { url: string | URL; }) {
   try {
+    // Extract the status query parameter from the URL
+    const { searchParams } = new URL(request.url);
+    const status = searchParams.get('status');
+
+    // Build the where clause conditionally
+    const whereClause = status ? { status } : {};
+
     const orders = await prisma.order.findMany({
+      where: whereClause,
       include: {
         item: true
       },

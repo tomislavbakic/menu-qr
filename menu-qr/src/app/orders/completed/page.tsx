@@ -1,20 +1,23 @@
-import { prisma } from '@/lib/prisma';
+'use client'
+import { useOrders } from '@/hooks/useOrders';
 import '../../globals.css';
 
-export default async function CompletedOrdersPage() {
-  const completedOrders = await prisma.order.findMany({
-    where: {
-      status: 'COMPLETED'
-    },
-    include: {
-      item: true
-    },
-    orderBy: {
-      updatedAt: 'desc' // Sort by completion time
-    }
-  });
+export default function CompletedOrdersPage() {
+  // const completedOrders = await prisma.order.findMany({
+  //   where: {
+  //     status: 'COMPLETED'
+  //   },
+  //   include: {
+  //     item: true
+  //   },
+  //   orderBy: {
+  //     updatedAt: 'desc' // Sort by completion time
+  //   }
+  // });
 
-  const formatDate = (date: Date) => {
+  const { orders } = useOrders('COMPLETED')
+
+  const formatDate = (date: Date | string) => {
     return new Intl.DateTimeFormat('sr-RS', {
       year: 'numeric',
       month: '2-digit',
@@ -73,7 +76,7 @@ export default async function CompletedOrdersPage() {
           </div>
         </div>
 
-        {completedOrders.length === 0 ? (
+        {orders.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-8xl mb-6">📋</div>
             <h2 className="text-2xl font-semibold text-gray-700 mb-3">Nema završenih narudžbi</h2>
@@ -92,18 +95,18 @@ export default async function CompletedOrdersPage() {
             {/* Summary stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-green-700">{completedOrders.length}</div>
+                <div className="text-2xl font-bold text-green-700">{orders.length}</div>
                 <div className="text-sm text-green-600">Završene narudžbe</div>
               </div>
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4 text-center">
                 <div className="text-2xl font-bold text-blue-700">
-                  {new Set(completedOrders.map(order => order.guestName)).size}
+                  {new Set(orders.map(order => order.guestName)).size}
                 </div>
                 <div className="text-sm text-blue-600">Različitih gostiju</div>
               </div>
               <div className="bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-200 rounded-xl p-4 text-center">
                 <div className="text-2xl font-bold text-purple-700">
-                  {new Set(completedOrders.map(order => order.itemId)).size}
+                  {new Set(orders.map(order => order.itemId)).size}
                 </div>
                 <div className="text-sm text-purple-600">Različitih stavki</div>
               </div>
@@ -111,7 +114,7 @@ export default async function CompletedOrdersPage() {
 
             {/* Completed Orders list */}
             <div className="space-y-4">
-              {completedOrders.map((order, index) => (
+              {orders.map((order, index) => (
                 <div
                   key={order.id}
                   className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 shadow-sm opacity-75"
@@ -197,7 +200,7 @@ export default async function CompletedOrdersPage() {
 
             {/* Footer info */}
             <div className="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
-              Poslednja završena narudžba: {completedOrders[0] && formatDate(completedOrders[0].updatedAt)}
+              Poslednja završena narudžba: {orders[0] && formatDate(orders[0].updatedAt)}
             </div>
           </>
         )}
