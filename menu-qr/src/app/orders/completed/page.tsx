@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import '../../globals.css';
+export const dynamic = "force-dynamic"; 
 
 export default async function CompletedOrdersPage() {
   const completedOrders = await prisma.order.findMany({
