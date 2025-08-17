@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import './globals.css';
-
+export const dynamic = "force-dynamic"; 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-100 via-white to-cyan-100 flex flex-col items-center justify-center px-6 text-center">

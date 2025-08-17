@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import MenuClient from './MenuClient';
 import '../globals.css';
-
+export const dynamic = "force-dynamic"; 
 // Server component wrapper - this fetches data and passes to client
 export default async function MenuPage() {
   const items = await prisma.item.findMany({ orderBy: { createdAt: 'desc' } });

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '../../globals.css';
+export const dynamic = "force-dynamic"; 
 
 type ItemType = 'FOOD' | 'DRINK' | 'ACTIVITY';
 
