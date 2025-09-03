@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import OrdersClient from './OrdersClient';
-export const dynamic = "force-dynamic"; 
+
 export default async function OrdersPage() {
   console.log('OrdersPage component is rendering...');
   try {

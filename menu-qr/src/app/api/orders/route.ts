@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from "next/cache";
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,6 +47,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
+    revalidatePath("/orders");
     return NextResponse.json(order, { status: 201 });
   } catch (error) {
     console.error('Error creating order:', error);

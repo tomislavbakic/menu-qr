@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from "next/cache";
+
 
 export async function PUT(
   request: NextRequest, context: { params: Promise<{ id: string }> }) {
@@ -45,6 +47,8 @@ export async function PUT(
       }
     });
 
+    revalidatePath("/orders");
+    revalidatePath("/orders/completed");
     return NextResponse.json(updatedOrder);
   } catch (error) {
     console.error('Error completing order:', error);

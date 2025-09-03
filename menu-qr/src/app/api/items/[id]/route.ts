@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyToken } from '@/lib/auth';
+import { revalidatePath } from "next/cache";
 
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
@@ -24,6 +25,7 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
             where: { id },
             data: { name, available, type },
         });
+        revalidatePath("/menu");
         return NextResponse.json(updatedItem);
     } catch (error) {
         return NextResponse.json({ error: 'Item not found or could not be updated' }, { status: 404 });
@@ -51,6 +53,7 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
         await prisma.item.delete({
             where: { id },
         });
+        revalidatePath("/menu");
         return NextResponse.json({ message: 'Item deleted' });
     } catch (error) {
         return NextResponse.json({ error: 'Item not found or could not be deleted' }, { status: 404 });
